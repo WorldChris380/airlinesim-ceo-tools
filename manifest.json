@@ -1,13 +1,17 @@
 {
   "name": "AirlineSim CEO Tools",
-  "version": "0.0.051024",
+  "version": "1.0.051024",
   "description": "Extends and improves your managing experience using AirlineSim.",
   "manifest_version": 3,
   "author": "Christian Böhme",
   "content_scripts": [
     {
       "matches": ["https://*.airlinesim.aero/*"],
-      "js": ["ranking.js", "fleetManagement/displayArea.js"]
+      "js": [
+        "ranking.js",
+        "fleetManagement/createTagForm.js",
+        "fleetManagement/createTagDisplayArea.js"
+      ]
     }
   ],
 
