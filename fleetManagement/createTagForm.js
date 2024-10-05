@@ -1,3 +1,4 @@
+// createTagForm.js
 function createTagCreationArea() {
   let createFormForTagCreation;
 
@@ -9,7 +10,7 @@ function createTagCreationArea() {
 
   function createTagButton() {
     const button = document.createElement("button");
-    button.style.marginRight = "6px";
+    button.style.marginRight = "20px";
     button.type = "submit";
     button.innerHTML = '<i class="fa fa-tag"></i> Create tag';
     button.classList.add("btn", "btn-default");
@@ -40,31 +41,27 @@ function createTagCreationArea() {
     createDropDownList.style.marginRight = "3px";
     createDropDownList.classList.add("form-control");
 
-    // Optionen aus dem Objekt dynamisch erstellen (ohne Klassen hinzuzufügen)
+    // Dynamically create options from the object
     Object.keys(coloursObject).forEach((color) => {
       const option = document.createElement("option");
-      option.value = color; // Setzt den Wert der Option auf den Farbnamen
-      option.textContent = color.charAt(0).toUpperCase() + color.slice(1); // Text der Option (z.B. "Red")
-      createDropDownList.appendChild(option); // Fügt die Option dem Dropdown hinzu
+      option.value = color; // Set the option value
+      option.textContent = color.charAt(0).toUpperCase() + color.slice(1); // Set the displayed text
+      createDropDownList.appendChild(option); // Add the option to the dropdown
     });
 
     return createDropDownList;
   }
 
-  // Funktion zur Erstellung des Tag-Erstellungsformulars
   function createTagCreationForm() {
-    // Display Area für das Formular
     const createLiForDisplayArea = document.querySelector(
       "body > div.container-fluid > div > ul > li"
     );
     createLiForDisplayArea.style.display = "flex";
     createLiForDisplayArea.style.justifyContent = "flex-end";
 
-    // Formular erstellen und einfügen
     createFormForTagCreation = createForm();
     createLiForDisplayArea.prepend(createFormForTagCreation);
 
-    // Eingabefeld für Tag-Namen erstellen und einfügen
     const createTagNameArea = document.createElement("div");
     createTagNameArea.classList.add("form-group");
     createFormForTagCreation.appendChild(createTagNameArea);
@@ -72,27 +69,34 @@ function createTagCreationArea() {
     const createInputForTagName = createTagInput();
     createTagNameArea.appendChild(createInputForTagName);
 
-    // Dropdown für Farbauswahl erstellen und einfügen
     const colorDropdown = createDropdownForChoosingColour();
     createFormForTagCreation.appendChild(colorDropdown);
 
-    // Button erstellen und einfügen
     const createTagCreationButton = createTagButton();
     createFormForTagCreation.appendChild(createTagCreationButton);
 
-    // Event-Handling für das Formular
+    // Event handling for the form submission
     createFormForTagCreation.addEventListener("submit", function (event) {
-      event.preventDefault(); // Verhindert die Standardaktion
-      // Hier den Code für die Erstellung des Tags hinzufügen
-      console.log("Tag created:", createInputForTagName.value); // Beispiel: Tag-Name ausgeben
+      event.preventDefault(); // Prevent the default action
+
+      const tagName = createInputForTagName.value; // Get the tag name
+      const selectedColor = colorDropdown.value; // Get the selected color
+
+      // Call the function to create a button in the as-panel area
+      createTagButton(tagName, selectedColor);
+
+      // Debug: Log the tag creation
+      console.log("Tag created:", tagName);
+
+      // Clear the input field
+      createInputForTagName.value = "";
     });
   }
 
-  // Aufruf der Funktion zur Erstellung des Tag-Erstellungsformulars
   createTagCreationForm();
 }
 
-// Überprüfe die URL-Bedingung und rufe die Funktion auf
+// Check the URL condition and call the function
 const currentUrl = window.location.href;
 
 if (
