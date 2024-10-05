@@ -1,4 +1,3 @@
-// createTagForm.js
 function createTagCreationArea() {
   let createFormForTagCreation;
 
@@ -28,28 +27,46 @@ function createTagCreationArea() {
   function createDropdownForChoosingColour() {
     const createDropDownList = document.createElement("select");
     const coloursObject = {
-      red: "text-danger",
-      green: "text-success",
-      blue: "text-primary",
-      yellow: "text-warning",
-      black: "text-dark",
-      white: "text-light",
-      gray: "text-secondary",
-      cyan: "text-info",
-      purple: "text-purple",
+      red: "btn-danger", // Button class for red
+      green: "btn-success", // Button class for green
+      blue: "btn-primary", // Button class for blue
+      yellow: "btn-warning", // Button class for yellow
+      black: "btn-dark", // Button class for black
+      white: "btn-light", // Button class for white
+      gray: "btn-secondary", // Button class for gray
+      cyan: "btn-info", // Button class for cyan
     };
     createDropDownList.style.marginRight = "3px";
     createDropDownList.classList.add("form-control");
 
     // Dynamically create options from the object
-    Object.keys(coloursObject).forEach((color) => {
+    Object.keys(coloursObject).forEach(function (color) {
       const option = document.createElement("option");
-      option.value = color; // Set the option value
+      option.value = coloursObject[color]; // Set the option value to the Bootstrap class
       option.textContent = color.charAt(0).toUpperCase() + color.slice(1); // Set the displayed text
       createDropDownList.appendChild(option); // Add the option to the dropdown
     });
 
     return createDropDownList;
+  }
+
+  function createTagButtonAndAppend(tagName, colorClass) {
+    const createDiv = document.querySelector(
+      "body > div.container-fluid > div > div.row > div.col-md-9 > div.fleet-action > div"
+    );
+
+    if (!createDiv) {
+      console.error("as-panel not found!");
+      return;
+    }
+
+    const tagButton = document.createElement("button");
+    tagButton.classList.add("btn", colorClass); // Set the button color class
+    tagButton.innerText = tagName; // Set the button text to the tag name
+    tagButton.style.margin = "5px"; // Optional: Add margin for spacing
+    tagButton.id = "tag-button-" + Date.now(); // Set a unique ID for the button
+
+    createDiv.appendChild(tagButton); // Append button to the as-panel
   }
 
   function createTagCreationForm() {
@@ -83,7 +100,7 @@ function createTagCreationArea() {
       const selectedColor = colorDropdown.value; // Get the selected color
 
       // Call the function to create a button in the as-panel area
-      createTagButton(tagName, selectedColor);
+      createTagButtonAndAppend(tagName, selectedColor);
 
       // Debug: Log the tag creation
       console.log("Tag created:", tagName);
