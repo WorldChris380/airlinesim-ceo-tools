@@ -29,15 +29,17 @@ function createTagCreationArea() {
   function createDropdownForChoosingColour() {
     var createDropDownList = document.createElement("select");
     var coloursObject = {
-      red: "#dc3545", // Bootstrap's btn-danger
-      green: "#198754", // Bootstrap's btn-success
-      blue: "#0d6efd", // Bootstrap's btn-primary
-      yellow: "#ffc107", // Bootstrap's btn-warning
-      black: "#212529", // Bootstrap's btn-dark
-      white: "#f8f9fa", // Bootstrap's btn-light
-      gray: "#6c757d", // Bootstrap's btn-secondary
-      turquoise: "#0dcaf0", // Bootstrap's btn-info
+      red: "#dc3545",
+      green: "#198754", 
+      blue: "#0d6efd", 
+      yellow: "#ffc107", 
+      black: "#212529",
+      white: "#f8f9fa", 
+      gray: "#6c757d", 
+      turquoise: "#0dcaf0", 
     };
+
+
 
     createDropDownList.style.marginRight = "3px";
     createDropDownList.classList.add("form-control");
