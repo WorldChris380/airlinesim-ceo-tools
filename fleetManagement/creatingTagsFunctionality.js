@@ -21,35 +21,46 @@ function createTagButtonAndAppend(tagName, selectedColor, tagId) {
   button.style.backgroundColor = selectedColor;
   button.style.color = selectedColor === "#f8f9fa" ? "#000000" : "#ffffff"; // Schwarz für weiß
   button.style.border = "none";
-  button.style.padding = "0px 3px";
+  button.style.padding = "0 0 0 10px";
   button.style.margin = "5px 15px 5px 0";
   button.style.borderRadius = "5px";
   button.style.cursor = "grab";
+
+  // Überprüfen, ob die Farbe #4D5052 oder #353536 ist
+  if (selectedColor === "#4D5052") {
+    button.style.border = "2px solid white"; // Weißer Rahmen um den Button
+  } else {
+    button.style.border = "none"; // Kein Rahmen für andere Farben
+  }
 
   // Checkbox in den Button einfügen
   button.appendChild(checkbox);
   button.appendChild(document.createTextNode(tagName)); // Text für den Button hinzufügen
 
-  // Trash Button erstellen
-  var trashButton = document.createElement("button");
-  trashButton.innerHTML = '<i class="fa fa-trash" style="color: white;"></i>';
-  trashButton.style.backgroundColor = "red";
-  trashButton.style.color = "#ffffff";
-  trashButton.style.border = "none";
-  trashButton.style.padding = "10px";
-  trashButton.style.margin = "0px -10px 0 0 ";
-  trashButton.style.borderTopLeftRadius = "0";
-  trashButton.style.borderBottomLeftRadius = "0";
-  trashButton.style.borderTopRightRadius = "5px";
-  trashButton.style.borderBottomRightRadius = "5px";
-  trashButton.style.cursor = "pointer";
+// Trash Button erstellen
+var trashButton = document.createElement("button");
+trashButton.innerHTML = '<i class="fa fa-trash" style="color: white;"></i>';
+trashButton.style.backgroundColor = "red";
+trashButton.style.color = "#ffffff";
+trashButton.style.border = "none";
+trashButton.style.padding = "7px";
+trashButton.style.margin = "0";
+trashButton.style.borderTopLeftRadius = "0";
+trashButton.style.borderBottomLeftRadius = "0";
+trashButton.style.borderTopRightRadius = "5px";
+trashButton.style.borderBottomRightRadius = "5px";
+trashButton.style.cursor = "pointer";
 
-  trashButton.style.marginLeft = "10px"; // Optional: Abstand zwischen Button und Trash-Icon
+// Füge einen weißen Rand auf der linken Seite hinzu
+trashButton.style.borderLeft = "2px solid white";
 
-  trashButton.addEventListener("click", function () {
-    buttonContainer.remove();
-    removeTagFromLocalStorage(tagId); // Entferne den Tag aus dem localStorage
-  });
+trashButton.style.marginLeft = "10px"; // Optional: Abstand zwischen Button und Trash-Icon
+
+trashButton.addEventListener("click", function () {
+  buttonContainer.remove();
+  removeTagFromLocalStorage(tagId); // Entferne den Tag aus dem localStorage
+});
+
 
   // Füge Button und Trash Button in den Container ein
   buttonContainer.appendChild(button);

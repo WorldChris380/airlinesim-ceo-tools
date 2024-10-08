@@ -29,17 +29,16 @@ function createTagCreationArea() {
   function createDropdownForChoosingColour() {
     var createDropDownList = document.createElement("select");
     var coloursObject = {
+      standard: "#4D5052",
       red: "#dc3545",
-      green: "#198754", 
-      blue: "#0d6efd", 
-      yellow: "#ffc107", 
+      green: "#198754",
+      blue: "#0d6efd",
+      yellow: "#ffc107",
       black: "#212529",
-      white: "#f8f9fa", 
-      gray: "#6c757d", 
-      turquoise: "#0dcaf0", 
+      white: "#f8f9fa",
+      darkGrey: "#353536",
+      turquoise: "#0dcaf0",
     };
-
-
 
     createDropDownList.style.marginRight = "3px";
     createDropDownList.classList.add("form-control");
