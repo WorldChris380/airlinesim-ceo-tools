@@ -8,6 +8,7 @@
     {
       "matches": ["https://*.airlinesim.aero/*"],
       "js": [
+        "fleetManagement/localStorage.js",
         "ranking.js",
         "fleetManagement/createTagForm.js",
         "fleetManagement/createTagsArea.js",
@@ -15,7 +16,6 @@
       ]
     }
   ],
-
   "icons": {
     "16": "icons/Christian Boehme Logo 16px.png",
     "48": "icons/Christian Boehme Logo 48px.png",

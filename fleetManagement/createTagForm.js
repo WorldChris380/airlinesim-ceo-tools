@@ -1,14 +1,16 @@
+// createTagForm.js
+
 function createTagCreationArea() {
-  let createFormForTagCreation;
+  var createFormForTagCreation;
 
   function createForm() {
-    const form = document.createElement("form");
+    var form = document.createElement("form");
     form.classList.add("form-inline");
     return form;
   }
 
   function createTagButton() {
-    const button = document.createElement("button");
+    var button = document.createElement("button");
     button.style.marginRight = "20px";
     button.type = "submit";
     button.innerHTML = '<i class="fa fa-tag"></i> Create tag';
@@ -17,7 +19,7 @@ function createTagCreationArea() {
   }
 
   function createTagInput() {
-    const input = document.createElement("input");
+    var input = document.createElement("input");
     input.classList.add("form-control");
     input.type = "text";
     input.placeholder = "Name tag";
@@ -25,52 +27,34 @@ function createTagCreationArea() {
   }
 
   function createDropdownForChoosingColour() {
-    const createDropDownList = document.createElement("select");
-    const coloursObject = {
-      red: "btn-danger", // Button class for red
-      green: "btn-success", // Button class for green
-      blue: "btn-primary", // Button class for blue
-      yellow: "btn-warning", // Button class for yellow
-      black: "btn-dark", // Button class for black
-      white: "btn-light", // Button class for white
-      gray: "btn-secondary", // Button class for gray
-      cyan: "btn-info", // Button class for cyan
+    var createDropDownList = document.createElement("select");
+    var coloursObject = {
+      red: "#dc3545", // Bootstrap's btn-danger
+      green: "#198754", // Bootstrap's btn-success
+      blue: "#0d6efd", // Bootstrap's btn-primary
+      yellow: "#ffc107", // Bootstrap's btn-warning
+      black: "#212529", // Bootstrap's btn-dark
+      white: "#f8f9fa", // Bootstrap's btn-light
+      gray: "#6c757d", // Bootstrap's btn-secondary
+      turquoise: "#0dcaf0", // Bootstrap's btn-info
     };
+
     createDropDownList.style.marginRight = "3px";
     createDropDownList.classList.add("form-control");
 
     // Dynamically create options from the object
     Object.keys(coloursObject).forEach(function (color) {
-      const option = document.createElement("option");
-      option.value = coloursObject[color]; // Set the option value to the Bootstrap class
-      option.textContent = color.charAt(0).toUpperCase() + color.slice(1); // Set the displayed text
-      createDropDownList.appendChild(option); // Add the option to the dropdown
+      var option = document.createElement("option");
+      option.value = coloursObject[color];
+      option.textContent = color.charAt(0).toUpperCase() + color.slice(1);
+      createDropDownList.appendChild(option);
     });
 
     return createDropDownList;
   }
 
-  function createTagButtonAndAppend(tagName, colorClass) {
-    const createDiv = document.querySelector(
-      "body > div.container-fluid > div > div.row > div.col-md-9 > div.fleet-action > div"
-    );
-
-    if (!createDiv) {
-      console.error("as-panel not found!");
-      return;
-    }
-
-    const tagButton = document.createElement("button");
-    tagButton.classList.add("btn", colorClass); // Set the button color class
-    tagButton.innerText = tagName; // Set the button text to the tag name
-    tagButton.style.margin = "5px"; // Optional: Add margin for spacing
-    tagButton.id = "tag-button-" + Date.now(); // Set a unique ID for the button
-
-    createDiv.appendChild(tagButton); // Append button to the as-panel
-  }
-
   function createTagCreationForm() {
-    const createLiForDisplayArea = document.querySelector(
+    var createLiForDisplayArea = document.querySelector(
       "body > div.container-fluid > div > ul > li"
     );
     createLiForDisplayArea.style.display = "flex";
@@ -79,33 +63,43 @@ function createTagCreationArea() {
     createFormForTagCreation = createForm();
     createLiForDisplayArea.prepend(createFormForTagCreation);
 
-    const createTagNameArea = document.createElement("div");
+    var createTagNameArea = document.createElement("div");
     createTagNameArea.classList.add("form-group");
     createFormForTagCreation.appendChild(createTagNameArea);
 
-    const createInputForTagName = createTagInput();
+    var createInputForTagName = createTagInput();
     createTagNameArea.appendChild(createInputForTagName);
 
-    const colorDropdown = createDropdownForChoosingColour();
+    var colorDropdown = createDropdownForChoosingColour();
     createFormForTagCreation.appendChild(colorDropdown);
 
-    const createTagCreationButton = createTagButton();
+    var createTagCreationButton = createTagButton();
     createFormForTagCreation.appendChild(createTagCreationButton);
 
-    // Event handling for the form submission
     createFormForTagCreation.addEventListener("submit", function (event) {
       event.preventDefault(); // Prevent the default action
 
-      const tagName = createInputForTagName.value; // Get the tag name
-      const selectedColor = colorDropdown.value; // Get the selected color
+      var tagName = createInputForTagName.value.trim(); // Get the tag name and trim whitespace
+      var selectedColor = colorDropdown.value; // Access the selected color
 
-      // Call the function to create a button in the as-panel area
-      createTagButtonAndAppend(tagName, selectedColor);
+      console.log("Tag Name:", tagName);
+      console.log("Selected Color:", selectedColor);
 
-      // Debug: Log the tag creation
-      console.log("Tag created:", tagName);
+      if (!tagName || !selectedColor) {
+        alert("Bitte geben Sie einen Tag-Namen ein und wählen Sie eine Farbe."); // Alert the user
+        return;
+      }
 
-      // Clear the input field
+      // Generate a unique ID for each new tag
+      var tagId = "tag-button-" + Date.now(); // Create a unique ID
+
+      // Save the tag in localStorage
+      saveTagToLocalStorage(tagId, tagName, selectedColor); // Call function from localStorage.js
+
+      // Create and append the new tag button
+      createTagButtonAndAppend(tagName, selectedColor, tagId); // Create the tag button
+
+      // Clear the input field after the tag is created
       createInputForTagName.value = "";
     });
   }
@@ -114,7 +108,7 @@ function createTagCreationArea() {
 }
 
 // Check the URL condition and call the function
-const currentUrl = window.location.href;
+var currentUrl = window.location.href;
 
 if (
   currentUrl.includes("airlinesim.aero/app/fleets") &&

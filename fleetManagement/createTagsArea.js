@@ -12,8 +12,11 @@ function createH3AndTagArea() {
   createParentDiv.classList.add("fleet-action");
   const createDiv = document.createElement("div");
   createDiv.classList.add("as-panel");
-  selectAreaForH2.parentNode.prepend(createParentDiv);
+  createDiv.style.display = "flex";
+
+  // Ensure to append createDiv to createParentDiv before adding to the DOM
   createParentDiv.appendChild(createDiv);
+  selectAreaForH2.parentNode.prepend(createParentDiv);
   createH3.insertAdjacentElement("afterend", createParentDiv);
 }
 
