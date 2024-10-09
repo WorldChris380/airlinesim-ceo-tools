@@ -1,3 +1,4 @@
+
 // Funktion zur Erstellung eines Trash-Buttons
 function createTrashButton(buttonContainer, tagId) {
   var trashButton = document.createElement("button");
@@ -32,7 +33,7 @@ function createTagButtonAndAppend(tagName, selectedColor, tagId) {
   buttonContainer.style.display = "flex";
   buttonContainer.style.flexWrap = "nowrap";
   buttonContainer.style.alignItems = "center";
-  buttonContainer.style.marginBottom = "10px";
+  buttonContainer.style.marginBottom = "1px";
 
   // Checkbox erstellen
   var checkbox = document.createElement("input");
@@ -49,10 +50,9 @@ function createTagButtonAndAppend(tagName, selectedColor, tagId) {
   button.style.flexWrap = "nowrap";
   button.style.backgroundColor = selectedColor;
   button.style.color = selectedColor === "#f8f9fa" ? "#000000" : "#ffffff"; 
-  button.style.border =
-    selectedColor === "#4D5052" ? "2px solid white" : "none"; 
+  button.style.border = selectedColor === "#4D5052" ? "2px solid white" : "none"; 
   button.style.padding = "0 0 0 10px";
-  button.style.margin = "5px 15px 5px 0";
+  button.style.margin = "5px 5px 5px 0";
   button.style.borderRadius = "5px";
   button.style.cursor = "grab";
 

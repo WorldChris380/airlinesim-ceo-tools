@@ -14,7 +14,8 @@
         "fleetManagement/createTagsArea.js",
         "fleetManagement/creatingTagsFunctionality.js",
         "fleetManagement/tableAdjustment.js",
-        "fleetManagement/dragAndDrop.js"
+        "fleetManagement/dragAndDrop.js",
+        "fleetManagement/filter.js"
       ]
     }
   ],
