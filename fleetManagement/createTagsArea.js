@@ -21,10 +21,26 @@ function createH3AndTagArea() {
   createDiv.style.justifyContent = "flex-start"; // Buttons links ausrichten
   createDiv.style.gap = "10px"; // Abstand zwischen den Buttons
 
+  // Hier fügen wir die existierenden Checkboxen hinzu
+  addCheckboxListeners(createDiv);
+
   // Ensure to append createDiv to createParentDiv before adding to the DOM
   createParentDiv.appendChild(createDiv);
   selectAreaForH2.parentNode.prepend(createParentDiv);
   createH3.insertAdjacentElement("afterend", createParentDiv);
+}
+
+function addCheckboxListeners(container) {
+  // Suche nach den Checkboxen im as-panel-Bereich
+  const checkboxes = container.querySelectorAll("input[type='checkbox']");
+
+  checkboxes.forEach(checkbox => {
+    console.log("Checkbox found:", checkbox.id); // Protokolliere die gefundenen Checkboxen
+    checkbox.addEventListener("change", function() {
+      console.log("Checkbox changed:", this.id, "Checked:", this.checked);
+      filterRows(); // Filtere die Zeilen basierend auf den Checkboxen
+    });
+  });
 }
 
 if (

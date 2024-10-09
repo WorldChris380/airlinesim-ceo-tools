@@ -1,4 +1,3 @@
-
 // Funktion zur Erstellung eines Trash-Buttons
 function createTrashButton(buttonContainer, tagId) {
   var trashButton = document.createElement("button");
@@ -18,10 +17,11 @@ function createTrashButton(buttonContainer, tagId) {
   trashButton.style.marginLeft = "10px";
 
   trashButton.addEventListener("click", function (event) {
-    event.stopPropagation();
-    event.preventDefault();
-    buttonContainer.remove();
-    removeTagFromLocalStorage(tagId);
+      event.stopPropagation();
+      event.preventDefault();
+      buttonContainer.remove();
+      removeTagFromLocalStorage(tagId);
+      filterRows(); // Optional: Filtere die Zeilen, wenn der Tag entfernt wird
   });
 
   return trashButton;
@@ -38,14 +38,14 @@ function createTagButtonAndAppend(tagName, selectedColor, tagId) {
   // Checkbox erstellen
   var checkbox = document.createElement("input");
   checkbox.type = "checkbox";
-  checkbox.id = tagId + "-checkbox";
+  checkbox.id = tagId; // Setze die ID der Checkbox auf die ID des Hauptbuttons
   checkbox.style.verticalAlign = "middle";
   checkbox.style.marginTop = "0";
   checkbox.style.marginRight = "10px";
 
   // Hauptbutton erstellen
   var button = document.createElement("button");
-  button.id = tagId;
+  button.id = tagId; // ID des Hauptbuttons bleibt unverändert
   button.draggable = true;
   button.style.flexWrap = "nowrap";
   button.style.backgroundColor = selectedColor;
@@ -66,9 +66,15 @@ function createTagButtonAndAppend(tagName, selectedColor, tagId) {
   // Füge Button in den Container ein
   buttonContainer.appendChild(button);
 
+  // Füge einen Event Listener zu der Checkbox hinzu
+  checkbox.addEventListener("change", function() {
+      console.log(`Checkbox ${checkbox.id} wurde geändert. Status: ${checkbox.checked}`); // Protokolliere den Änderungsstatus
+      filterRows(); // Filtere die Zeilen, wenn die Checkbox geändert wird
+  });
+
   // Buttons in den übergeordneten Wrapper einfügen
   var displayArea = document.querySelector(
-    "body > div.container-fluid > div > div.row > div.col-md-9 > div.fleet-action > div"
+      "body > div.container-fluid > div > div.row > div.col-md-9 > div.fleet-action > div"
   );
   displayArea.appendChild(buttonContainer);
 }
@@ -77,7 +83,7 @@ function createTagButtonAndAppend(tagName, selectedColor, tagId) {
 function loadExistingTags() {
   var tags = loadTagsFromLocalStorage();
   tags.forEach(function (tag) {
-    createTagButtonAndAppend(tag.name, tag.color, tag.id);
+      createTagButtonAndAppend(tag.name, tag.color, tag.id);
   });
 }
 
