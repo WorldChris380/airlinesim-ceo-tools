@@ -12,7 +12,9 @@
         "ranking.js",
         "fleetManagement/createTagForm.js",
         "fleetManagement/createTagsArea.js",
-        "fleetManagement/creatingTagsFunctionality.js"
+        "fleetManagement/creatingTagsFunctionality.js",
+        "fleetManagement/tableAdjustment.js",
+        "fleetManagement/dragAndDrop.js"
       ]
     }
   ],
