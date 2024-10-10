@@ -49,7 +49,14 @@ function filterRows() {
 // Füge Event Listener für die Checkboxen hinzu
 var checkboxes = document.querySelectorAll('input[type="checkbox"]');
 checkboxes.forEach(function(checkbox) {
-    checkbox.addEventListener('change', filterRows); // Filter-Funktion bei Änderung aufrufen
+    checkbox.addEventListener('change', function(event) {
+        // Überprüfen, ob die Checkbox in der Tabelle angeklickt wurde
+        if (event.target.closest('table')) {
+            event.stopPropagation(); // Verhindere das Standardverhalten und das Event-Bubbling
+            return; // Keine Aktion ausführen, wenn die Checkbox in der Tabelle ist
+        }
+        filterRows(); // Filter-Funktion bei Änderung aufrufen
+    });
 });
 
 // Initiales Filtern, falls bereits aktivierte Checkboxen vorhanden sind
