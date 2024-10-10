@@ -1,3 +1,5 @@
+// dragAndDrop.js
+
 // Ermöglicht das Ziehen von Buttons
 document.addEventListener("dragstart", function (event) {
   if (event.target.tagName === "BUTTON" && event.target.draggable) {

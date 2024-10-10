@@ -1,3 +1,5 @@
+// Filter.js
+
 var activeTags = [];
 
 // Diese Funktion wird aufgerufen, wenn eine Checkbox geändert wird

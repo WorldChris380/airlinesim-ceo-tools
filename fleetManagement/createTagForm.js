@@ -91,10 +91,11 @@ function createTagCreationArea() {
         return;
       }
 
-      // Generate a unique ID for each new tag
-      var tagId = "tag-button-" + Date.now(); // Create a unique ID
+      // Generate a unique ID for the new tag
+      var subdomain = window.location.hostname.split('.')[0]; // Get the subdomain
+      var tagId = subdomain + "-" + Date.now(); // Create the tagId using the current timestamp for uniqueness
 
-      // Save the tag in localStorage
+      // Store the tag in localStorage
       saveTagToLocalStorage(tagId, tagName, selectedColor); // Call function from localStorage.js
 
       // Create and append the new tag button

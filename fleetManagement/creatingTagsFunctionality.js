@@ -1,3 +1,5 @@
+// creatingTagsFuncitonality.js
+
 // Funktion zur Erstellung eines Trash-Buttons
 function createTrashButton(buttonContainer, tagId) {
   var trashButton = document.createElement("button");
