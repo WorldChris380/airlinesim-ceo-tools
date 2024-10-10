@@ -28,26 +28,26 @@ function createTagCreationArea() {
 
   function createDropdownForChoosingColour() {
     var createDropDownList = document.createElement("select");
-    var coloursObject = {
-      standard: "#4D5052",
-      red: "#dc3545",
-      green: "#198754",
-      blue: "#0d6efd",
-      yellow: "#ffc107",
-      black: "#212529",
-      white: "#f8f9fa",
-      darkGrey: "#353536",
-      turquoise: "#0dcaf0",
-    };
+    var coloursArray = [
+      { name: "Standardgrey", value: "#353536" },
+      { name: "Grey with white border", value: "#4D5052" },
+      { name: "Red", value: "#dc3545" },
+      { name: "Green", value: "#198754" },
+      { name: "Blue", value: "#0d6efd" },
+      { name: "Yellow", value: "#ffc107" },
+      { name: "Black", value: "#212529" },
+      { name: "White", value: "#f8f9fa" },
+      { name: "Turquoise", value: "#0dcaf0" },
+    ];
 
     createDropDownList.style.marginRight = "3px";
     createDropDownList.classList.add("form-control");
 
-    // Dynamically create options from the object
-    Object.keys(coloursObject).forEach(function (color) {
+    // Dynamisch Optionen aus dem Array erstellen
+    coloursArray.forEach(function (color) {
       var option = document.createElement("option");
-      option.value = coloursObject[color];
-      option.textContent = color.charAt(0).toUpperCase() + color.slice(1);
+      option.value = color.value;
+      option.textContent = color.name; // Verwendung des individuellen Namens
       createDropDownList.appendChild(option);
     });
 
@@ -92,7 +92,7 @@ function createTagCreationArea() {
       }
 
       // Generate a unique ID for the new tag
-      var subdomain = window.location.hostname.split('.')[0]; // Get the subdomain
+      var subdomain = window.location.hostname.split(".")[0]; // Get the subdomain
       var tagId = subdomain + "-" + Date.now(); // Create the tagId using the current timestamp for uniqueness
 
       // Store the tag in localStorage
