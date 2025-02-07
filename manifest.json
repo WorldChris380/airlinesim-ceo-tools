@@ -15,7 +15,9 @@
         "fleetManagement/creatingTagsFunctionality.js",
         "fleetManagement/tableAdjustment.js",
         "fleetManagement/dragAndDrop.js",
-        "fleetManagement/filter.js"
+        "fleetManagement/filter.js",
+        "fleetManagement/buttonPositioning.js",
+        "fleetManagement/positionStorage.js"
       ]
     }
   ],
