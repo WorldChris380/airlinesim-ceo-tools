@@ -1,6 +1,6 @@
 {
   "name": "AirlineSim CEO Tools",
-  "version": "1.0.20250315",
+  "version": "1.0.20250421",
   "description": "Extends and improves your managing experience using AirlineSim.",
   "manifest_version": 3,
   "author": "Christian Böhme",
@@ -15,7 +15,8 @@
         "fleetManagement/creatingTagsFunctionality.js",
         "fleetManagement/tableAdjustment.js",
         "fleetManagement/dragAndDrop.js",
-        "fleetManagement/filter.js"
+        "fleetManagement/filter.js",
+        "marketing.js"
       ]
     }
   ],
