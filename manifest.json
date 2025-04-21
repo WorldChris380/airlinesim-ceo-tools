@@ -1,6 +1,6 @@
 {
   "name": "AirlineSim CEO Tools",
-  "version": "1.0.20250421",
+  "version": "1.20250421",
   "description": "Extends and improves your managing experience using AirlineSim.",
   "manifest_version": 3,
   "author": "Christian Böhme",
@@ -24,5 +24,11 @@
     "16": "icons/Christian Boehme Logo 16px.png",
     "48": "icons/Christian Boehme Logo 48px.png",
     "128": "icons/Christian Boehme Logo 128px.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/Christian-Boehme-Logo-128px.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
