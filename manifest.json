@@ -16,7 +16,8 @@
         "fleetManagement/tableAdjustment.js",
         "fleetManagement/dragAndDrop.js",
         "fleetManagement/filter.js",
-        "marketing.js"
+        "marketing.js",
+        "navbar.js"
       ]
     }
   ],

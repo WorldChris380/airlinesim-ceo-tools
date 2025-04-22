@@ -1,61 +1,67 @@
 if (
   window.location.href.includes("airlinesim.aero/app/enterprise/dashboard?")
 ) {
-  let row = document.getElementsByClassName("row");
-
-  // Überschrift
-  let h3 = document.createElement("h3");
   let col_md_4 = document.getElementsByClassName("col-md-4");
-  h3.innerHTML = "AirlineSim CEO Tools";
-  col_md_4[1].insertBefore(h3, col_md_4[1].firstChild);
 
-  let createAbsoluteFirstDiv = document.createElement("div");
-  createAbsoluteFirstDiv.classList.add("as-panel", "facts");
-  col_md_4[1].insertBefore(createAbsoluteFirstDiv, h3.nextSibling);
+  // HTML-Struktur als Template Literal
+  let htmlContent = `
+    <h3>
+      <img width="12px" src="${chrome.runtime.getURL(
+        "icons/Christian-Boehme-Logo-128px.png"
+      )}" alt="AS CEO Tools">
+      AirlineSim CEO Tools
+    </h3>
+    <div class="as-panel facts">
+      <div class="as-table-well">
+        <div>
+          <table class="table table-striped table-hover">
+            <tbody>
+              <tr>
+                <th style="vertical-align: middle;">Ranking position (Pax/week)</th>
+                <td id="ranking-position" style="vertical-align: middle;">Not checked yet.</td>
+                <td style="vertical-align: middle; text-align: right;">
+                  <a id="update-ranking-link">
+                    <button class="btn btn-default">Update Ranking</button>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
 
-  // Tabelle
-  let createFirstDiv = document.createElement("div");
-  createFirstDiv.classList.add("as-table-well");
-  createAbsoluteFirstDiv.appendChild(createFirstDiv);
+  // Füge die HTML-Struktur in die Seite ein
+  col_md_4[1].insertAdjacentHTML("afterbegin", htmlContent);
 
-  let createNewDiv = document.createElement("div");
-  createFirstDiv.appendChild(createNewDiv);
+  // Abrufen des gespeicherten Rankings aus dem localStorage
+  let savedRanking = localStorage.getItem("rankingPosition");
 
-  let createNewTable = document.createElement("table");
-  createNewTable.classList.add("table", "table-striped", "table-hover");
-  createNewDiv.appendChild(createNewTable);
+  // Überprüfen, ob ein Wert vorhanden ist
+  let rankingPositionTd = document.getElementById("ranking-position");
+  if (savedRanking) {
+    console.log("Gespeichertes Ranking:", savedRanking);
+    rankingPositionTd.innerHTML = "#" + savedRanking;
+  } else {
+    console.log("Kein gespeichertes Ranking gefunden.");
+  }
 
-  let createNewTbody = document.createElement("tbody");
-  createNewTable.appendChild(createNewTbody);
-  let createNewTr = document.createElement("tr");
-  createNewTbody.appendChild(createNewTr);
-  let createNewTh = document.createElement("th");
-  createNewTh.innerHTML = "Ranking position (Pax/week)";
-  createNewTr.appendChild(createNewTh);
-
-  let createNewTd = document.createElement("td");
-  createNewTd.innerHTML = "Not checked yet.";
-  createNewTr.appendChild(createNewTd);
-
-  // Nach der Tabelle
-  let createNewLink = document.createElement("a");
-  createNewLink.innerHTML = "Check Ranking";
-
-  // Hole den Airline-Namen hier
+  // Hole den Airline-Namen
   let getAirlineName = document.querySelector(
     "#enterprise-dashboard > div:nth-child(1) > div.as-panel.facts > div > table > tbody > tr:nth-child(1) > td"
   );
   let airlineName = getAirlineName.innerText;
 
-  // Passiere den Airline-Namen an die Funktion
-  createNewLink.onclick = function () {
-    checkRanking(airlineName, createNewTd); // Übergebe createNewTd als Argument
+  // Event-Handler für den Update-Button
+  let updateRankingLink = document.getElementById("update-ranking-link");
+  updateRankingLink.onclick = function () {
+    checkRanking(airlineName, rankingPositionTd); // Übergebe rankingPositionTd als Argument
   };
-  createAbsoluteFirstDiv.appendChild(createNewLink);
 }
 
 // Funktion zum Abrufen des Rankings
-function checkRanking(airlineName, createNewTd) {
+function checkRanking(airlineName, rankingPositionTd) {
   let host = window.location.host;
   let parts = host.split(".");
   let subdomain = parts.length > 2 ? parts.slice(0, -2).join(".") : "";
@@ -72,14 +78,16 @@ function checkRanking(airlineName, createNewTd) {
 
       if (previousSibling) {
         console.log(previousSibling.innerText);
-        createNewTd.innerHTML = "#" + previousSibling.innerText;
-      }
-    } else {
-      let noDataMessage =
-        "Airline/Server just started - no Position available yet.";
-      createNewTd.innerHTML = noDataMessage;
-    }
+        rankingPositionTd.innerHTML = "#" + previousSibling.innerText;
 
+        // Speichere den Wert im localStorage
+        localStorage.setItem("rankingPosition", previousSibling.innerText);
+      } else {
+        let noDataMessage =
+          "Airline/Server just started - no Position available yet.";
+        rankingPositionTd.innerHTML = noDataMessage;
+      }
+    }
     newWindow.close();
   };
 }
