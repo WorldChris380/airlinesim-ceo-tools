@@ -121,4 +121,14 @@ if (window.location.href.includes("airlinesim.aero/app/fleets")) {
   ) {
     createTagCreationArea();
   }
+
+  //Making left fleet menu sticky
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-3"
+  ).style.position = "sticky";
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-3"
+  ).style.top = "102px";
+
+  
 }

@@ -21,7 +21,7 @@ if (window.location.href.includes("airlinesim.aero/app/fleets")) {
     createDiv.style.display = "flex";
     createDiv.style.flexWrap = "wrap"; // Erlaube Zeilenumbruch
     createDiv.style.justifyContent = "flex-start"; // Buttons links ausrichten
-    createDiv.style.gap = "10px"; // Abstand zwischen den Buttons
+    createDiv.style.gap = "3px"; // Abstand zwischen den Buttons
 
     // Hier fügen wir die existierenden Checkboxen hinzu
     addCheckboxListeners(createDiv);
@@ -51,4 +51,46 @@ if (window.location.href.includes("airlinesim.aero/app/fleets")) {
   ) {
     createH3AndTagArea();
   }
+
+  //Making tags menu sticky
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9"
+  ).style.position = "sticky";
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9"
+  ).style.top = "102px";
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9 > h3:nth-child(1)"
+  ).style.position = "sticky";
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9 > h3:nth-child(1)"
+  ).style.top = "102px";
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9 > h3:nth-child(1)"
+  ).style.zIndex = "9";
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9 > div.fleet-action"
+  ).style.position = "sticky";
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9 > div.fleet-action"
+  ).style.top = "128px";
+
+  // Scrollbar für das Element "div.as-panel" hinzufügen
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9 > div.as-panel"
+  ).style.overflowY = "auto"; // Aktiviert die vertikale Scrollbar
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9 > div.as-panel"
+  ).style.maxHeight = "40vh"; // Begrenzung der maximalen Höhe
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9 > div.as-panel"
+  ).style.zIndex = "0";
+  document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9 > div.fleet-action > div"
+  ).style.zIndex = "9";
+  document.querySelector("body").style.overflowY = "hidden"; // Deaktiviert die vertikale Scrollbar
+
+  // Scrollbar für unteren Aktionsbereich im Flottenmanagement
+  document.querySelector("#id2efb").style.overflowY = "auto";
+  document.querySelector("#id2efb").style.maxHeight = "20vh";
 }
