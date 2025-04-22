@@ -115,6 +115,7 @@ if (
   );
   if (lastWorldUpdateDate) {
     lastWorldUpdateDateTd.innerText = lastWorldUpdateDate;
+    updateDateClass(lastWorldUpdateDateTd); // Überprüfe und setze die Klasse
   }
 
   // Event-Handler für den Update-Country-Ranking-Button
@@ -135,20 +136,26 @@ if (
     let currentDate = new Date().toLocaleString();
     lastCountryUpdateDateTd.innerText = currentDate;
 
-    // Speichere das Datum im localStorage
-    localStorage.setItem("lastCountryUpdateDate", currentDate);
+    // Speichere das Datum im localStorage mit Subdomain
+    let subdomain = getSubdomain();
+    localStorage.setItem(`lastCountryUpdateDate_${subdomain}`, currentDate);
   };
 
   // Setze das gespeicherte Country Ranking beim Laden der Seite
-  let savedCountryRanking = localStorage.getItem("countryRankingPosition");
+  let savedCountryRanking = localStorage.getItem(
+    `countryRankingPosition_${subdomain}`
+  );
   if (savedCountryRanking) {
     countryRankingPositionTd.innerHTML = "#" + savedCountryRanking;
   }
 
   // Setze das gespeicherte Datum beim Laden der Seite
-  let lastCountryUpdateDate = localStorage.getItem("lastCountryUpdateDate");
+  let lastCountryUpdateDate = localStorage.getItem(
+    `lastCountryUpdateDate_${subdomain}`
+  );
   if (lastCountryUpdateDate) {
     lastCountryUpdateDateTd.innerText = lastCountryUpdateDate;
+    updateDateClass(lastCountryUpdateDateTd); // Überprüfe und setze die Klasse
   }
 
   // Event-Handler für den Update-Continent-Ranking-Button
@@ -219,23 +226,29 @@ if (
       let currentDate = new Date().toLocaleString();
       lastContinentUpdateDateTd.innerText = currentDate;
 
-      // Speichere das Datum im localStorage
-      localStorage.setItem("lastContinentUpdateDate", currentDate);
+      // Speichere das Datum im localStorage mit Subdomain
+      let subdomain = getSubdomain();
+      localStorage.setItem(`lastContinentUpdateDate_${subdomain}`, currentDate);
 
       newWindow.close();
     };
   };
 
   // Setze das gespeicherte Continent Ranking beim Laden der Seite
-  let savedContinentRanking = localStorage.getItem("continentRankingPosition");
+  let savedContinentRanking = localStorage.getItem(
+    `continentRankingPosition_${subdomain}`
+  );
   if (savedContinentRanking) {
     continentRankingPositionTd.innerHTML = "#" + savedContinentRanking;
   }
 
   // Setze das gespeicherte Datum beim Laden der Seite
-  let lastContinentUpdateDate = localStorage.getItem("lastContinentUpdateDate");
+  let lastContinentUpdateDate = localStorage.getItem(
+    `lastContinentUpdateDate_${subdomain}`
+  );
   if (lastContinentUpdateDate) {
     lastContinentUpdateDateTd.innerText = lastContinentUpdateDate;
+    updateDateClass(lastContinentUpdateDateTd); // Überprüfe und setze die Klasse
   }
 }
 
@@ -299,8 +312,7 @@ function checkRanking(airlineName, worldRankingPositionTd) {
 // Funktion zum Abrufen des Country Rankings
 function checkCountryRanking(airlineName, countryRankingPositionTd) {
   let host = window.location.host;
-  let parts = host.split(".");
-  let subdomain = parts.length > 2 ? parts.slice(0, -2).join(".") : "";
+  let subdomain = getSubdomain();
 
   // URL für das Continent-0-Statistikfenster
   let continentZeroURL = `https://${subdomain}.airlinesim.aero/action/info/stat?type=transrecpax&continent=0`;
@@ -339,9 +351,9 @@ function checkCountryRanking(airlineName, countryRankingPositionTd) {
           console.log("Country Ranking gefunden:", previousSibling.innerText);
           countryRankingPositionTd.innerHTML = "#" + previousSibling.innerText;
 
-          // Speichere das Country Ranking im localStorage
+          // Speichere das Country Ranking im localStorage mit Subdomain
           localStorage.setItem(
-            "countryRankingPosition",
+            `countryRankingPosition_${subdomain}`,
             previousSibling.innerText
           );
         } else {
@@ -383,9 +395,9 @@ function checkContinentRanking(
         console.log("Continent Ranking gefunden:", previousSibling.innerText);
         continentRankingPositionTd.innerHTML = "#" + previousSibling.innerText;
 
-        // Speichere das Continent Ranking im localStorage
+        // Speichere das Continent Ranking im localStorage mit Subdomain
         localStorage.setItem(
-          "continentRankingPosition",
+          `continentRankingPosition_${subdomain}`,
           previousSibling.innerText
         );
       } else {
@@ -398,6 +410,25 @@ function checkContinentRanking(
     }
     newWindow.close();
   };
+}
+
+// Funktion zum Überprüfen und Setzen der Klasse basierend auf dem Datum
+function updateDateClass(dateElement) {
+  const currentDate = new Date();
+  const lastUpdateDate = new Date(dateElement.innerText);
+
+  // Berechne die Differenz in Tagen
+  const timeDifference = currentDate - lastUpdateDate;
+  const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+  // Setze die Klasse basierend auf der Differenz
+  if (daysDifference > 7) {
+    dateElement.classList.remove("good");
+    dateElement.classList.add("bad");
+  } else {
+    dateElement.classList.remove("bad");
+    dateElement.classList.add("good");
+  }
 }
 
 // Funktion zum Abrufen der Subdomain
