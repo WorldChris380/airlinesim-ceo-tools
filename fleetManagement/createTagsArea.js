@@ -21,7 +21,7 @@ if (window.location.href.includes("airlinesim.aero/app/fleets")) {
     createDiv.style.display = "flex";
     createDiv.style.flexWrap = "wrap"; // Erlaube Zeilenumbruch
     createDiv.style.justifyContent = "flex-start"; // Buttons links ausrichten
-    createDiv.style.gap = "3px"; // Abstand zwischen den Buttons
+    createDiv.style.gap = "0px"; // Abstand zwischen den Buttons
 
     // Hier fügen wir die existierenden Checkboxen hinzu
     addCheckboxListeners(createDiv);
@@ -62,9 +62,9 @@ if (window.location.href.includes("airlinesim.aero/app/fleets")) {
   document.querySelector(
     "body > div.container-fluid > div > div.row > div.col-md-9 > h3:nth-child(1)"
   ).style.position = "sticky";
-  document.querySelector(
-    "body > div.container-fluid > div > div.row > div.col-md-9 > h3:nth-child(1)"
-  ).style.top = "102px";
+  // document.querySelector(
+  //   "body > div.container-fluid > div > div.row > div.col-md-9 > h3:nth-child(1)"
+  // ).style.top = "102px";
   document.querySelector(
     "body > div.container-fluid > div > div.row > div.col-md-9 > h3:nth-child(1)"
   ).style.zIndex = "9";
@@ -73,7 +73,23 @@ if (window.location.href.includes("airlinesim.aero/app/fleets")) {
   ).style.position = "sticky";
   document.querySelector(
     "body > div.container-fluid > div > div.row > div.col-md-9 > div.fleet-action"
-  ).style.top = "128px";
+  ).style.zIndex = "9";
+  // document.querySelector(
+  //   "body > div.container-fluid > div > div.row > div.col-md-9 > div.fleet-action"
+  // ).style.top = "128px";
+
+  let fleetColumn = document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-3 > div > div"
+  );
+  fleetColumn.style.position = "sticky";
+  fleetColumn.style.overflowY = "scroll";
+  fleetColumn.style.maxHeight = "70vh";
+
+  let rightFleetManagementColumn = document.querySelector(
+    "body > div.container-fluid > div > div.row > div.col-md-9"
+  );
+  rightFleetManagementColumn.style.overflowY = "scroll";
+  rightFleetManagementColumn.style.maxHeight = "77vh";
 
   // Scrollbar für das Element "div.as-panel" hinzufügen
   document.querySelector(
@@ -91,6 +107,8 @@ if (window.location.href.includes("airlinesim.aero/app/fleets")) {
   document.querySelector("body").style.overflowY = "hidden"; // Deaktiviert die vertikale Scrollbar
 
   // Scrollbar für unteren Aktionsbereich im Flottenmanagement
-  document.querySelector("#id2efb").style.overflowY = "auto";
-  document.querySelector("#id2efb").style.maxHeight = "20vh";
+  if (document.querySelector("#id2efb")) {
+    document.querySelector("#id2efb").style.overflowY = "auto";
+    document.querySelector("#id2efb").style.maxHeight = "20vh";
+  }
 }

@@ -18,7 +18,7 @@ navbar.innerHTML += `<li class="dropdown">
         rel="noreferrer noopener"
       >
         <span aria-hidden="true" class="fa fa-external-link"></span>
-        Forum Topic
+         Forum Topic
       </a>
     </li>
     <li>
@@ -26,7 +26,7 @@ navbar.innerHTML += `<li class="dropdown">
         href="https://discord.com/channels/113555701774749696/1249639537450160138"
         target="_blank"
         rel="noreferrer noopener"
-        ><span aria-hidden="true" class="fa fa-external-link"></span>Discord</a
+        ><span aria-hidden="true" class="fa fa-external-link"></span> Discord</a
       >
     </li>
     <li class="divider"></li>
@@ -36,7 +36,7 @@ navbar.innerHTML += `<li class="dropdown">
         href="https://christian-boehme.com/airlinesim_extention.html"
         target="_blank"
         rel="noreferrer noopener"
-        ><span aria-hidden="true" class="fa fa-book"></span>Website of the extention</a
+        ><span aria-hidden="true" class="fa fa-book"></span> Website of the extention</a
       >
     </li>
     <li>
@@ -44,7 +44,7 @@ navbar.innerHTML += `<li class="dropdown">
         href="https://github.com/WorldChris380/airlinesim-ceo-tools"
         target="_blank"
         rel="noreferrer noopener"
-        ><span aria-hidden="true" class="fa fa-github"></span>GitHub</a
+        ><span aria-hidden="true" class="fa fa-github"></span> GitHub</a
       >
     </li>
     <li>
@@ -52,11 +52,11 @@ navbar.innerHTML += `<li class="dropdown">
         href="https://github.com/WorldChris380/airlinesim-ceo-tools/issues/new"
         target="_blank"
         rel="noreferrer noopener"
-        ><span aria-hidden="true" class="fa fa-bug"></span>Report a Bug</a
+        ><span aria-hidden="true" class="fa fa-bug"></span> Report a Bug</a
       >
     </li>
     <li class="divider"></li>
-    <li class="dropdown-header">About the developer</li>
+    <li class="dropdown-header"> About the developer</li>
     <li>
       <a class="linkedIn"
         href="https://www.linkedin.com/in/christian-boehme-business/"

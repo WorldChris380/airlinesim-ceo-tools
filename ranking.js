@@ -1,7 +1,25 @@
+// ranking.js
+
 if (
   window.location.href.includes("airlinesim.aero/app/enterprise/dashboard?")
 ) {
   let col_md_4 = document.getElementsByClassName("col-md-4");
+
+  // Hole die Country-ID aus der Seite
+  let countryIDElement = document.querySelector(
+    "#enterprise-dashboard > div:nth-child(1) > div.as-panel.facts > div > table > tbody > tr:nth-child(4) > td > a"
+  );
+
+  let countryID = "0"; // Standardwert, falls keine ID gefunden wird
+  if (countryIDElement) {
+    countryID = countryIDElement.href.split("=").pop(); // Extrahiere die ID aus der URL
+  }
+
+  // Continent-ID ist immer "0" für den Standard-Link
+  let continentID = "0";
+
+  // World-Ranking benötigt keine spezifische ID, daher bleibt der Parameter leer
+  let worldID = ""; // Kein spezifischer Parameter erforderlich
 
   // HTML-Struktur als Template Literal
   let htmlContent = `
@@ -23,7 +41,9 @@ if (
               <th style="vertical-align: middle; text-align: right;">Last Update</th>
             </thead>
               <tr>
-                <th style="vertical-align: middle;">Country</th>
+                <th style="vertical-align: middle;">
+                  <a target="_blank" href="https://${getSubdomain()}.airlinesim.aero/action/info/stat?type=transrecpax&country=${countryID}&limit=0">Country</a>
+                </th>
                 <td id="country-ranking-position" style="vertical-align: middle;">Not checked yet.</td>
                 <td style="vertical-align: middle; text-align: right;">
                   <a id="update-country-ranking-link">
@@ -33,7 +53,9 @@ if (
                 <td id="last-country-update-date" style="vertical-align: middle; text-align: right;">Not updated yet</td>
               </tr>
               <tr>
-                <th style="vertical-align: middle;">Continent</th>
+                <th style="vertical-align: middle;">
+                  <a target="_blank" href="https://${getSubdomain()}.airlinesim.aero/action/info/stat?type=transrecpax&continent=${continentID}&limit=0">Continent</a>
+                </th>
                 <td id="ranking-position" style="vertical-align: middle;">Not checked yet.</td>
                 <td style="vertical-align: middle; text-align: right;">
                   <a id="update-contintent-ranking-link">
@@ -43,7 +65,9 @@ if (
                 <td id="last-update-date" style="vertical-align: middle; text-align: right;">Not updated yet</td>
               </tr>
               <tr>
-                <th style="vertical-align: middle;">World</th>
+                <th style="vertical-align: middle;">
+                  <a target="_blank" href="https://${getSubdomain()}.airlinesim.aero/action/info/stat?type=transrecpax&limit=0">World</a>
+                </th>
                 <td id="world-ranking-position" style="vertical-align: middle;">Not checked yet.</td>
                 <td style="vertical-align: middle; text-align: right;">
                   <a id="update-ranking-link">
@@ -96,7 +120,7 @@ if (
     lastWorldUpdateDateTd.innerText = currentDate;
 
     // Speichere das Datum im localStorage mit Subdomain
-    let subdomain = getSubdomain();
+    subdomain = getSubdomain();
     localStorage.setItem(`lastWorldUpdateDate_${subdomain}`, currentDate);
   };
 
@@ -250,6 +274,80 @@ if (
     lastContinentUpdateDateTd.innerText = lastContinentUpdateDate;
     updateDateClass(lastContinentUpdateDateTd); // Überprüfe und setze die Klasse
   }
+
+  // Event-Handler für den Klick auf den Link
+  document
+    .querySelector(
+      "#enterprise-dashboard > div:nth-child(2) > div.as-panel.facts > div > div > table > tbody:nth-child(3) > tr:nth-child(2) > th > a"
+    )
+    .addEventListener("click", function (event) {
+      event.preventDefault(); // Verhindere den Standard-Link-Klick
+
+      let subdomain = getSubdomain();
+
+      // 1. Frage und vergleiche die Continent-ID ab
+      let continentIDElement = document.querySelector(
+        "#enterprise-dashboard > div:nth-child(1) > div.as-panel.facts > div > table > tbody > tr:nth-child(3) > td > a"
+      );
+
+      if (!continentIDElement) {
+        console.log("Continent-ID konnte nicht gefunden werden.");
+        return;
+      }
+
+      let continentHref = continentIDElement.href;
+      let continentWindow = window.open(continentHref);
+
+      continentWindow.onload = function () {
+        let continentNameElement = continentWindow.document.querySelector(
+          "body > div.container-fluid > div > div > div > div:nth-child(1) > div.col-md-4 > div > div > table > tbody:nth-child(1) > tr:nth-child(9) > td:nth-child(2)"
+        );
+
+        if (!continentNameElement) {
+          console.log("Continent-Name konnte nicht gefunden werden.");
+          continentWindow.close();
+          return;
+        }
+
+        let continentName = continentNameElement.innerText.trim();
+        console.log("Gefundener Kontinent:", continentName);
+
+        // Mappe den Kontinentnamen auf die ID
+        let continentIDMap = {
+          Afrika: 1,
+          Europa: 2,
+          Mittelamerika: 3,
+          Nordamerika: 4,
+          Südamerika: 5,
+          Ostasien: 6,
+          Vorderasien: 7,
+          Ozeanien: 8,
+        };
+
+        let continentID = continentIDMap[continentName];
+        if (!continentID) {
+          console.log("Ungültiger Kontinent:", continentName);
+          continentWindow.close();
+          return;
+        }
+
+        console.log("Gefundene Continent-ID:", continentID);
+        continentWindow.close();
+
+        // 2. Rufe die World-Statistikseite auf und schließe sie
+        let worldURL = `https://${subdomain}.airlinesim.aero/action/info/stat?type=transrecpax&limit=0`;
+        let worldWindow = window.open(worldURL);
+
+        worldWindow.onload = function () {
+          console.log("World-Statistik geladen.");
+          worldWindow.close();
+
+          // 3. Rufe die Continent-Statistikseite mit der abgefragten Continent-ID auf
+          let continentURL = `https://${subdomain}.airlinesim.aero/action/info/stat?type=transrecpax&continent=${continentID}`;
+          window.open(continentURL); // Öffne die Continent-Statistikseite, aber schließe sie nicht
+        };
+      };
+    });
 }
 
 // Funktion zum Abrufen des Rankings
@@ -376,39 +474,102 @@ function checkContinentRanking(
   continentID
 ) {
   let host = window.location.host;
-  let parts = host.split(".");
-  let subdomain = parts.length > 2 ? parts.slice(0, -2).join(".") : "";
+  let subdomain = getSubdomain();
 
-  // URL für das Continent Ranking
-  let statisticURL = `https://${subdomain}.airlinesim.aero/action/info/stat?type=transrecpax&continent=${continentID}`;
+  // Hole die Continent-ID aus der Seite
+  let continentIDElement = document.querySelector(
+    "#enterprise-dashboard > div:nth-child(1) > div.as-panel.facts > div > table > tbody > tr:nth-child(3) > td > a"
+  );
 
-  let newWindow = window.open(statisticURL);
-  newWindow.onload = function () {
-    let foundElement = Array.from(
-      newWindow.document.querySelectorAll("td")
-    ).find((td) => td.innerText.trim() === airlineName);
+  if (!continentIDElement) {
+    console.log("Continent-ID konnte nicht gefunden werden.");
+    return;
+  }
 
-    if (foundElement) {
-      let previousSibling = foundElement.previousElementSibling;
+  // Öffne den Link und finde die Continent-ID
+  let continentHref = continentIDElement.href;
+  let continentWindow = window.open(continentHref);
 
-      if (previousSibling) {
-        console.log("Continent Ranking gefunden:", previousSibling.innerText);
-        continentRankingPositionTd.innerHTML = "#" + previousSibling.innerText;
+  continentWindow.onload = function () {
+    let continentNameElement = continentWindow.document.querySelector(
+      "body > div.container-fluid > div > div > div > div:nth-child(1) > div.col-md-4 > div > div > table > tbody:nth-child(1) > tr:nth-child(9) > td:nth-child(2)"
+    );
 
-        // Speichere das Continent Ranking im localStorage mit Subdomain
-        localStorage.setItem(
-          `continentRankingPosition_${subdomain}`,
-          previousSibling.innerText
-        );
-      } else {
-        let noDataMessage =
-          "Airline/Server just started - no Continent Position available yet.";
-        continentRankingPositionTd.innerHTML = noDataMessage;
-      }
-    } else {
-      console.log("Airline wurde im Continent Ranking nicht gefunden.");
+    if (!continentNameElement) {
+      console.log("Continent-Name konnte nicht gefunden werden.");
+      continentWindow.close();
+      return;
     }
-    newWindow.close();
+
+    let continentName = continentNameElement.innerText.trim();
+    console.log("Gefundener Kontinent:", continentName);
+
+    // Mappe den Kontinentnamen auf die ID
+    let continentIDMap = {
+      Afrika: 1,
+      Europa: 2,
+      Mittelamerika: 3,
+      Nordamerika: 4,
+      Südamerika: 5,
+      Ostasien: 6,
+      Vorderasien: 7,
+      Ozeanien: 8,
+    };
+
+    let continentID = continentIDMap[continentName];
+    if (!continentID) {
+      console.log("Ungültiger Kontinent:", continentName);
+      continentWindow.close();
+      return;
+    }
+
+    console.log("Gefundene Continent-ID:", continentID);
+    continentWindow.close();
+
+    // Öffne die Country-0-Statistikseite
+    let countryZeroURL = `https://${subdomain}.airlinesim.aero/action/info/stat?type=transrecpax&country=0`;
+    let countryZeroWindow = window.open(countryZeroURL);
+
+    countryZeroWindow.onload = function () {
+      console.log("Country=0 Statistik geladen.");
+      countryZeroWindow.close();
+
+      // Nach dem Schließen des Country-0-Fensters, rufe das Continent-Ranking ab
+      let statisticURL = `https://${subdomain}.airlinesim.aero/action/info/stat?type=transrecpax&continent=${continentID}`;
+
+      let newWindow = window.open(statisticURL);
+      newWindow.onload = function () {
+        let foundElement = Array.from(
+          newWindow.document.querySelectorAll("td")
+        ).find((td) => td.innerText.trim() === airlineName);
+
+        if (foundElement) {
+          let previousSibling = foundElement.previousElementSibling;
+
+          if (previousSibling) {
+            console.log(
+              "Continent Ranking gefunden:",
+              previousSibling.innerText
+            );
+            continentRankingPositionTd.innerHTML =
+              "#" + previousSibling.innerText;
+
+            // Speichere das Continent Ranking im localStorage mit Subdomain
+            localStorage.setItem(
+              `continentRankingPosition_${subdomain}`,
+              previousSibling.innerText
+            );
+          } else {
+            let noDataMessage =
+              "Airline/Server just started - no Continent Position available yet.";
+            continentRankingPositionTd.innerHTML = noDataMessage;
+          }
+        } else {
+          console.log("Airline wurde im Continent Ranking nicht gefunden.");
+        }
+        newWindow.close();
+      };
+    };
   };
 }
 
