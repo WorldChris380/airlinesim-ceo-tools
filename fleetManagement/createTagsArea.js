@@ -1,6 +1,9 @@
 // createTagsArea.js
 
-if (window.location.href.includes("airlinesim.aero/app/fleets")) {
+if (
+  window.location.href.includes("airlinesim.aero/app/fleets") &&
+  !window.location.href.includes("airlinesim.aero/app/fleets/aircraft")
+) {
   const selectAreaForH2 = document.querySelector(
     "body > div.container-fluid > div > div.row > div.col-md-9 > h2"
   );

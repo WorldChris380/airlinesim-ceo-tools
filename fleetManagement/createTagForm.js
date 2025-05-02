@@ -1,6 +1,7 @@
 // createTagForm.js
 
-if (window.location.href.includes("airlinesim.aero/app/fleets")) {
+if (window.location.href.includes("airlinesim.aero/app/fleets") &&
+    !window.location.href.includes("airlinesim.aero/app/fleets/aircraft")) {
   function createTagCreationArea() {
     var createFormForTagCreation;
 

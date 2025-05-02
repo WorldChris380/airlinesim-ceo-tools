@@ -1,5 +1,8 @@
 // Filter.js
-if (window.location.href.includes("airlinesim.aero/app/fleets")) {
+if (
+  window.location.href.includes("airlinesim.aero/app/fleets") &&
+  !window.location.href.includes("airlinesim.aero/app/fleets/aircraft")
+) {
   var activeTags = [];
 
   // Diese Funktion wird aufgerufen, wenn eine Checkbox geändert wird

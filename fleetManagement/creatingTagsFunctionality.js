@@ -1,6 +1,9 @@
 // creatingTagsFuncitonality.js
 
-if (window.location.href.includes("airlinesim.aero/app/fleets")) {
+if (
+  window.location.href.includes("airlinesim.aero/app/fleets") &&
+  !window.location.href.includes("airlinesim.aero/app/fleets/aircraft")
+) {
   // Funktion zur Erstellung eines Trash-Buttons
   function createTrashButton(buttonContainer, tagId) {
     var trashButton = document.createElement("button");

@@ -1,5 +1,8 @@
 // tableAdjustments.js
-if (window.location.href.includes("airlinesim.aero/app/fleets")) {
+if (
+  window.location.href.includes("airlinesim.aero/app/fleets") &&
+  !window.location.href.includes("airlinesim.aero/app/fleets/aircraft")
+) {
   // Wähle die Tabelle aus
   const table = document.querySelector(
     "body > div.container-fluid > div > div.row > div.col-md-9 > div.as-panel > form > div > table"
