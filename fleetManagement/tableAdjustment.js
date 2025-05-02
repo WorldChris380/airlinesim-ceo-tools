@@ -18,7 +18,9 @@ if (window.location.href.includes("airlinesim.aero/app/fleets")) {
   // Fügt die zweite Spaltenüberschrift zur ersten Header-Zeile hinzu
   const tableSecondHeaderRow = tableHeader.firstElementChild;
   const createTh2 = document.createElement("th");
-  createTh2.innerText = "AirlineSim CEO Tools";
+  createTh2.innerHTML = `<img width="14px" src="${chrome.runtime.getURL(
+    "icons/Christian-Boehme-Logo-128px.png"
+  )}">`;
   tableSecondHeaderRow.appendChild(createTh2);
 
   // Füge eine neue Spalte in jeder Zeile des tbody hinzu

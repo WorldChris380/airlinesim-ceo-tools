@@ -17,7 +17,8 @@
         "fleetManagement/dragAndDrop.js",
         "fleetManagement/filter.js",
         "marketing.js",
-        "navbar.js"
+        "navbar.js",
+        "fleetManagement/lastViewedPlane.js"
       ]
     }
   ],
